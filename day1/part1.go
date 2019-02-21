@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("../input.txt")
+	file, err := os.Open("./input.txt")
 
 	if err != nil {
 		log.Fatal(err)
@@ -29,8 +29,6 @@ func main() {
 			log.Fatal(err)
 		}
 
-		t := fmt.Sprintf("sum = %d + %d", sum, i)
-		fmt.Println(t)
 		sum = sum + i
 	}
 
