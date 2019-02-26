@@ -50,12 +50,13 @@ func main() {
 			temp := minutes[id]
 			for i := start; i < end; i++ {
 				 temp[i] = temp[i] + 1
-				 totals[id] ++
+				 totals[id]++
 			}
 			minutes[id] = temp
 		}
 	}
 
+	// Part 1
 	guardId := MaxId(totals)
 
 	guardMinutes := minutes[guardId]
@@ -63,6 +64,10 @@ func main() {
 	maxMinutesAsleep := MaxMinutesAsleep(guardMinutes)
 
 	fmt.Println(guardId,maxMinutesAsleep, guardId * maxMinutesAsleep)
+
+	// Part 2
+	longestAsleepGuard, longestAsleepMinute := LongestAsleepTime(minutes)
+	fmt.Println(longestAsleepGuard,longestAsleepMinute, longestAsleepGuard * longestAsleepMinute)
 }
 
 func RegSplit(text string, delimeter string) []string {
@@ -104,6 +109,34 @@ func MaxMinutesAsleep(arr []int) int {
 	}
 
 	return Key
+}
+
+func LongestAsleepTime(arr map[int] []int) (int, int) {
+	longestAsleep := make([]int, 60)
+	longestAsleepTime := make([]int, 60)
+	for i := 0; i < 60; i++ {
+		for k,v := range arr {
+			// fmt.Println(longestAsleepTime[i], v[i], k)
+			if longestAsleepTime[i] < v[i]{
+				longestAsleep[i] = k
+				longestAsleepTime[i] = v[i]
+			}
+		}
+	}
+
+	biggest := 0
+	biggestId := 0
+	biggestMin := 0
+
+	for i , v := range longestAsleepTime {
+		if(v > biggest) {
+			biggest = v
+			biggestMin = i
+			biggestId = longestAsleep[i]
+		}
+	}
+
+	return biggestId, biggestMin
 }
 
 func Sort(file *os.File) []string {
