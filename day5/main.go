@@ -16,6 +16,10 @@ func main() {
 	// part1
 	line = GetUnitsAfterReaction(line)
 	fmt.Println(len(line))
+
+	// part2
+	length := GetLengthOfShortestPolymer(lines)
+	fmt.Println(length)
 }
 
 func GetLines(fileName string) []string {
@@ -55,4 +59,45 @@ func GetUnitsAfterReaction(line string) string {
 	}
 
 	return line;
+}
+
+func RemoveUnit(line string, j int) string {
+	for i := 0; i < len(line); i++ {
+		if line[i] == byte(j) || line[i] == byte(j+32) {
+			line = line[:i] + line[i+1:]
+			i--
+		}
+	}
+
+	return line
+}
+
+func GetLengthOfShortestPolymer(lines []string) int {
+
+	shortest := 0
+	for j := 65; j < 65+26; j++ {
+		fmt.Print(string(j), " ")
+
+		line := lines[0]
+		line = RemoveUnit(line, j)
+
+		fmt.Print(len(line), " ")
+
+		line = GetUnitsAfterReaction(line)
+
+		length := len(line)
+
+		fmt.Print(length, " ")
+
+		if shortest == 0 {
+			shortest = length
+		} else if length < shortest {
+			shortest = length
+			fmt.Print(" ↵")
+		}
+
+		fmt.Println("")
+	}
+
+	return shortest
 }
